@@ -33,7 +33,7 @@ from .models import property_predictor_model, load_property_predictor
 from .models import variational_layers
 from functools import partial
 from keras.layers import Lambda
-
+from keras.utils.vis_utils import plot_model
 
 
 def vectorize_data(params):
@@ -360,6 +360,9 @@ def main_property_run(params):
                metrics={'x_pred': ['categorical_accuracy',
                     vae_anneal_metric]})
 
+    print(AE_PP_model.summary())
+    plot_model(AE_PP_model, to_file='model.png', show_shapes=True, show_layer_names=True)
+    #keras.utils.plot_model(AE_PP_model, to_file='model.png', show_shapes=True, show_layer_names=True)
 
     AE_PP_model.fit(X_train, model_train_targets,
                          batch_size=params['batch_size'],
